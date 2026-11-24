@@ -31,8 +31,15 @@ def check_length(text: str) -> None:
         )
 
 
+def check_single_line(text: str) -> None:
+    """The entry is one joke on one line: refuse embedded newlines."""
+    if "\n" in text or text != text.strip():
+        raise SystemExit("entry text must be a single line with no edge whitespace")
+
+
 def main() -> None:
     check_length(TEXT)
+    check_single_line(TEXT)
     out = Path("/output/entry.txt")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(TEXT, encoding="utf-8")
